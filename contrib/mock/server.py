@@ -260,10 +260,11 @@ def get_subscription(request: web.Request):
         if subscription["uniqueId"] == unique_id
     ]
 
-    if not subscriptions:
-        return web.Response(status=404)
-
-    return web.json_response(subscriptions[0])
+    return (
+        web.json_response(subscriptions[0])
+        if subscriptions
+        else web.Response(status=404)
+    )
 
 
 def post_arm(request: web.Request):
@@ -298,10 +299,7 @@ def get_device(request: web.Request):
     id = request.match_info.get("id")
     devices = [device for device in DEVICES if device["id"] == int(id)]
 
-    if not devices:
-        return web.Response(status=404)
-
-    return web.json_response(devices[0])
+    return web.json_response(devices[0]) if devices else web.Response(status=404)
 
 
 async def put_device(request: web.Request):
@@ -320,9 +318,7 @@ async def put_device(request: web.Request):
 
 def get_positions(request: web.Request):
     device_id = request.query.get("device_id")
-    id = request.query.get("id")
-
-    if id:
+    if id := request.query.get("id"):
         positions = [
             position
             for position in POSITIONS

@@ -100,8 +100,7 @@ class Passport:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["bikePictures"] = from_list(from_str, self.bike_pictures)
+        result: dict = {"bikePictures": from_list(from_str, self.bike_pictures)}
         result["bikeType"] = from_str(self.bike_type)
         result["colour"] = from_str(self.colour)
         result["engine"] = from_str(self.engine)
@@ -151,8 +150,7 @@ class DeviceAttributes:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["alarm"] = from_bool(self.alarm)
+        result: dict = {"alarm": from_bool(self.alarm)}
         result["autoGuard"] = from_bool(self.auto_guard)
         result["geofenceRadius"] = from_int(self.geofence_radius)
         result["guarded"] = from_bool(self.guarded)
@@ -216,8 +214,7 @@ class Device:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["attributes"] = to_class(DeviceAttributes, self.attributes)
+        result: dict = {"attributes": to_class(DeviceAttributes, self.attributes)}
         result["category"] = from_none(self.category)
         result["contact"] = from_none(self.contact)
         result["disabled"] = from_bool(self.disabled)
@@ -277,8 +274,7 @@ class PositionAttributes:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["batteryLevel"] = from_int(self.battery_level)
+        result: dict = {"batteryLevel": from_int(self.battery_level)}
         result["charge"] = from_bool(self.charge)
         result["distance"] = to_float(self.distance)
         result["hours"] = from_int(self.hours)
@@ -356,8 +352,7 @@ class Position:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["accuracy"] = to_float(self.accuracy)
+        result: dict = {"accuracy": to_float(self.accuracy)}
         result["address"] = from_none(self.address)
         result["altitude"] = to_float(self.altitude)
         result["attributes"] = to_class(PositionAttributes, self.attributes)
@@ -406,8 +401,7 @@ class SessionAttributes:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["appEnvironment"] = from_str(self.app_environment)
+        result: dict = {"appEnvironment": from_str(self.app_environment)}
         result["appPackage"] = from_str(self.app_package)
         result["appVersion"] = from_str(self.app_version)
         result["fcmTokens"] = from_list(from_str, self.fcm_tokens)
@@ -495,8 +489,7 @@ class Session:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["administrator"] = from_bool(self.administrator)
+        result: dict = {"administrator": from_bool(self.administrator)}
         result["attributes"] = to_class(SessionAttributes, self.attributes)
         result["coordinateFormat"] = from_none(self.coordinate_format)
         result["deviceLimit"] = from_int(self.device_limit)
@@ -559,8 +552,7 @@ class Subscription:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["category"] = from_str(self.category)
+        result: dict = {"category": from_str(self.category)}
         result["createdAt"] = self.created_at.isoformat()
         result["id"] = from_int(self.id)
         result["setupFee"] = from_none(self.setup_fee)
@@ -645,8 +637,7 @@ class Trip:
         )
 
     def to_dict(self) -> dict:
-        result: dict = {}
-        result["averageSpeed"] = to_float(self.average_speed)
+        result: dict = {"averageSpeed": to_float(self.average_speed)}
         result["deviceId"] = from_int(self.device_id)
         result["deviceName"] = from_str(self.device_name)
         result["distance"] = to_float(self.distance)
