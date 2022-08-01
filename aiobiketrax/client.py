@@ -112,7 +112,7 @@ class Account:
                     _LOGGER.debug("Adding exponential backoff delay.")
 
                     errors += 1
-                    asyncio.sleep((8 if errors > 8 else errors) ** 2)
+                    asyncio.sleep(min(errors, 8)**2)
 
     @property
     def devices(self) -> list["Device"]:
@@ -257,68 +257,43 @@ class Device:
 
     @property
     def latitude(self) -> Optional[float]:
-        if not self._position:
-            return None
-
-        return self._position.latitude
+        return self._position.latitude if self._position else None
 
     @property
     def longitude(self) -> Optional[float]:
-        if not self._position:
-            return None
-
-        return self._position.longitude
+        return self._position.longitude if self._position else None
 
     @property
     def altitude(self) -> Optional[float]:
-        if not self._position:
-            return None
-
-        return self._position.altitude
+        return self._position.altitude if self._position else None
 
     @property
     def accuracy(self) -> Optional[int]:
-        if not self._position:
-            return None
-
-        return self._position.accuracy
+        return self._position.accuracy if self._position else None
 
     @property
     def speed(self) -> Optional[int]:
-        if not self._position:
-            return None
-
-        return self._position.speed
+        return self._position.speed if self._position else None
 
     @property
     def course(self) -> Optional[float]:
-        if not self._position:
-            return None
-
-        return self._position.course
+        return self._position.course if self._position else None
 
     @property
     def battery_level(self) -> Optional[float]:
-        if not self._position:
-            return None
-
-        return self._position.attributes.battery_level
+        return self._position.attributes.battery_level if self._position else None
 
     @property
     def total_distance(self) -> Optional[float]:
-        if not self._position:
-            return None
-
-        return self._position.attributes.total_distance / 1000.0
+        return (
+            self._position.attributes.total_distance / 1000.0
+            if self._position
+            else None
+        )
 
     @property
     def subscription_until(self) -> Optional[datetime]:
-        if not self._subscription:
-            return None
-
-        # TODO: unable to verify, but this will probably will not work for
-        # expired trial subscriptions.
-        return self._subscription.trial_end
+        return self._subscription.trial_end if self._subscription else None
 
     @property
     def last_updated(self) -> datetime:
